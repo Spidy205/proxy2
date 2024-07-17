@@ -1,3 +1,3 @@
-import proxy from 'proxy.js';
+import proxy from './proxy';
 
 export default proxy;

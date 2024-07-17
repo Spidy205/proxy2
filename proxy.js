@@ -6,10 +6,10 @@ const PORT = 3333;
 
 app.use(express.static('public'));
 
-app.get('/fetch-video', async (req, res) => {
-  const videoURL = 'https://lite-stream.vercel.app'; // Replace with your video URL
-  const token = 'jTr0WEXVZEXGGpIvIPbMzepKH6IJMhNxDtEMEMXB'; // Replace with your access token
+const videoURL = 'https://lite-stream.vercel.app'; // Replace with your video URL
+const token = 'jTr0WEXVZEXGGpIvIPbMzepKH6IJMhNxDtEMEMXB'; // Replace with your access token
 
+app.get('/fetch-video', async (req, res) => {
   try {
     const response = await fetch(videoURL, {
       method: 'GET',
@@ -18,13 +18,11 @@ app.get('/fetch-video', async (req, res) => {
       }
     });
 
-    if (response.status === 200) {
-      response.body.pipe(res);
-    } else {
-      res.status(response.status).send(response.statusText);
-    }
+    return response.status === 200
+      ? response.body.pipe(res)
+      : res.status(response.status).send(response.statusText);
   } catch (error) {
-    res.status(500).send(error.message);
+    return res.status(500).send(error.message);
   }
 });
 
